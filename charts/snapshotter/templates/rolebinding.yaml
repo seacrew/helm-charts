@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}-snapshot-role-binding
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Release.Name }}-snapshot-svc-account
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: {{ .Release.Name }}-snapshot-role
+  apiGroup: rbac.authorization.k8s.io

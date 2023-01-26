@@ -1,0 +1,66 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-snapshot-job
+spec:
+  schedule: "{{ .Values.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          serviceAccountName: {{ .Release.Name }}-snapshot-svc-account
+          containers:
+          - name: snapshotter
+            image: bitnami/kubectl
+            env:
+              - name: VOLUMES
+                value: "{{ .Values.volumes }}"
+              - name: RELEASE
+                value: "{{ .Release.Name }}"
+              - name: NAMESPACE
+                value: "{{ .Release.Namespace }}"
+              - name: MAX_DAYS
+                value: "{{ .Values.max_days }}"
+            command:
+             - sh
+             - "-c"
+             - |
+               /bin/bash <<'SCRIPT'
+
+               dt=$(date '+%Y-%m-%d-%H-%M')
+               
+               echo "Creating new snapshots"
+               for claim in ${VOLUMES//,/ }; do
+               
+               cat <<EOF | kubectl apply -f -
+                 apiVersion: snapshot.storage.k8s.io/v1
+                 kind: VolumeSnapshot
+                 metadata:
+                   name: $claim-$dt
+                   namespace: $NAMESPACE
+                   labels:
+                     app.kubernetes.io/managed-by: snapshotter
+                     app.kubernetes.io/name: $RELEASE
+                 spec:
+                   source:
+                     persistentVolumeClaimName: $claim
+               EOF
+               
+               done
+
+               echo "Deleting snapshots older than $MAX_DAYS days"
+               snapshots=$(kubectl -n $NAMESPACE get volumesnapshots -l app.kubernetes.io/managed-by=snapshotter,app.kubernetes.io/name=$RELEASE --no-headers -o custom-columns=":metadata.name")
+               
+               cutoff=$(date -d "$MAX_DAYS days ago" +%s)
+               
+               for snapshot in $snapshots; do
+                 creation_date=${snapshot: -16}
+                 creation_date=$(printf $creation_date | awk -F'-' '{printf $1"-"$2"-"$3" "$4":"$5":00"}')
+                 creation_date=$(date -d "$creation_date" +%s)
+                 if (($cutoff > $creation_date)); then
+                   kubectl -n $NAMESPACE delete volumesnapshot $snapshot
+                 fi
+               done
+               
+               SCRIPT
