@@ -1,3 +1,40 @@
-schedule: "0 0 * * *"
-volumes: "" # "pvc1,pvc2"
-max_days: 7
+snapshotter:
+  schedule: "0 0 * * *"
+  volumeClaims: "" # "pvc1,pvc2"
+  retentionInDays: 7
+  restartPolicy: never
+
+image:
+  repository: bitnami/kubectl
+  pullPolicy: IfNotPresent
+  tag: latest
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podSecurityContext: {}
+# fsGroup: 2000
+
+securityContext: {}
+# capabilities:
+#   drop:
+#   - ALL
+# readOnlyRootFilesystem: true
+# runAsNonRoot: true
+# runAsUser: 1000
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
