@@ -60,3 +60,25 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the rbac role to use
+*/}}
+{{- define "snapshotter.role" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (printf "%s-role" (include "snapshotter.fullname" .)) .Values.rbac.roleName }}
+{{- else }}
+{{- default "default" .Values.rbac.roleName }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the rbac rolebinding to use
+*/}}
+{{- define "snapshotter.rolebinding" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (printf "%s-rolebinding" (include "snapshotter.fullname" .)) .Values.rbac.roleName }}
+{{- else }}
+{{- default "default" .Values.rbac.roleName }}
+{{- end }}
+{{- end }}

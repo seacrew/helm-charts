@@ -22,6 +22,22 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+rbac:
+  # Specifies whether a role and rolebinding should be created
+  create: true
+  # Annotations to add to the role and rolebinding
+  annotations: {}
+  # The name of the role to use.
+  # If not set and create is true, a name is generated using the fullname template
+  roleName: ""
+  # The name of the rolebinding to use.
+  # If not set and create is true, a name is generated using the fullname template
+  rolebindingName: ""
+  rules:
+    - apiGroups: ["snapshot.storage.k8s.io"]
+      resources: ["volumesnapshots"]
+      verbs: ["create", "delete", "get", "watch", "list", "update"]
+
 podSecurityContext: {}
 # fsGroup: 2000
 

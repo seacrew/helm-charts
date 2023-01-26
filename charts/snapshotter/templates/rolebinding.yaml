@@ -1,12 +1,20 @@
+{{- if .Values.rbac.create -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ include "snapshotter.fullname" . }}-role-binding
+  name: {{ include "snapshotter.rolebinding" . }}
+  labels:
+    {{- include "snapshotter.labels" . | nindent 4 }}
+  {{- with .Values.rbac.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "snapshotter.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
-  name: {{ include "snapshotter.fullname" . }}-role
+  name: {{ include "snapshotter.role" . }}
   apiGroup: rbac.authorization.k8s.io
+{{- end }}
