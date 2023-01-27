@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ include "snapshotter.role" . }}
+  name: {{ include "snapshotter.roleName" . }}
   labels:
     {{- include "snapshotter.labels" . | nindent 4 }}
   {{- with .Values.rbac.annotations }}
