@@ -1,8 +1,8 @@
 # Snapshotter 
-A simple Helm Chart to manage your VolumeSnapshots with a Kubernetes CronJob executing a plain old shell script.
+A simple Helm Chart to manage your `VolumeSnapshots` with a Kubernetes `CronJob` executing a shell script.
 
 ## Introduction
-This chart bootstraps a cronjob on a schedule to create VolumeSnapshots for your precious PersistentVolumeClaims and automatically deletes them as well after a specified retention time.
+This chart bootstraps a cronjob on a schedule to create `VolumeSnapshots` for your precious `PersistentVolumeClaims` and automatically deletes them after a specified retention time as well.
 
 ## Installing the chart
 ```bash
@@ -13,7 +13,7 @@ helm install snapshotter seacrew/snapshotter -f override.yaml
 
 ## How to use it
 
-Just create your override.yaml file and specify your schedule, retention time and pvcs in comma separated list.
+Just create your override.yaml file and specify your schedule, retention time and pvcs as a comma separated list.
 
 ```yaml
 snapshotter:
