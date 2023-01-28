@@ -2,12 +2,12 @@ apiVersion: v1
 entries:
   snapshotter:
   - apiVersion: v2
-    created: "2023-01-28T07:20:01.65262865+01:00"
+    created: "2023-01-28T07:32:44.459466262+01:00"
     description: A Helm chart for automatically creating volume snapshots
-    digest: 82e3fdabf80120434eddafec8b05f986b303655abfb59dbf3c4418d835f275d0
+    digest: a5fd5fb904769514cb8cec537972846a44140a25d582865cc3ad0e5477e860bc
     name: snapshotter
     type: application
     urls:
     - https://github.com/seacrew/helm-charts/releases/download/snapshotter-1.0.0/snapshotter-1.0.0.tgz
     version: 1.0.0
-generated: "2023-01-28T07:20:01.652085409+01:00"
+generated: "2023-01-28T07:32:44.458731239+01:00"
