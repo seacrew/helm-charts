@@ -2,7 +2,7 @@ snapshotter:
   schedule: "0 0 * * *"
   volumeClaims: "" # "pvc1,pvc2"
   retentionInDays: 7
-  restartPolicy: never
+  restartPolicy: Never
 
 image:
   repository: bitnami/kubectl

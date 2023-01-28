@@ -29,7 +29,7 @@ snapshotter:
 | `snapshotter.schedule`        | `CronJob` schedule to create `VolumeSnapshots`        | `0 0 * * *`       |
 | `snapshotter.volumeClaims`    | Comma separated list of `PersistentVolumeClaims`      | `None`            |
 | `snapshotter.retentionInDays` | Retention of `VolumeSnapshots` in days                | `7`               |
-| `snapshotter.restartPolicy`   | Restart Policy if `CronJob` fails                     | `never`           |
+| `snapshotter.restartPolicy`   | Restart Policy if `CronJob` fails                     | `Never`           |
 | `image.repository`            | Image used for `CronJob`                              | `bitnami/kubectl` |
 | `image.pullPolicy`            | Image pull policy                                     | `IfNotPresent`    |
 | `image.tag`                   | `CronJob` image tag                                   | `latest`          |

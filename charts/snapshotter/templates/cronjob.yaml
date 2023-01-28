@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "snapshotter.labels" . | nindent 4 }}
 spec:
-  schedule: "{{ .Values.schedule }}"
+  schedule: "{{ .Values.snapshotter.schedule }}"
   jobTemplate:
     spec:
       template:
