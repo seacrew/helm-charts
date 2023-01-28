@@ -1,6 +1,0 @@
-apiVersion: v2
-name: snapshotter
-description: A Helm chart for automatically creating volume snapshots
-
-type: application
-version: 1.0.0
